@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,9 @@ export class AppComponent implements OnInit{
 
   submitForm(){
     console.log('submit');
-    
+    let date = moment(this.form.value.date, "YYYY-MM-DD");
+    console.log(date.isoWeekday());
+
   }
   
 }
