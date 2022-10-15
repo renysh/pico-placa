@@ -1,31 +1,55 @@
-
 <div class="container">
   <h1>Pico y Placa</h1>
-  
+
   <div class="card">
     <div class="card-header">
-      Featured
+      Datos
     </div>
     <div class="card-body">
-      <h5 class="card-title">Special title treatment</h5>
-      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+      <form [formGroup]="form" (ngSubmit)="submitForm()" autocomplete="off">
+        <div class="container">
+          <div class="row">
+            <!-- plate -->
+
+            <mat-form-field>
+              <input matInput placeholder="Placa" formControlName="plate">
+              <!-- error -->
+              <mat-error *ngIf="form.get('plate')!.hasError('required')">
+                Placa es <strong>requerida</strong>
+              </mat-error>
+            </mat-form-field>
+
+
+            <!-- fecha -->
+            <mat-form-field>
+              <input matInput placeholder="Fecha" [matDatepicker]="picker" formControlName="date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <!-- error -->
+              <mat-error *ngIf="form.get('date')!.hasError('required')">
+                Fecha es <strong>requerida</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <!-- hora -->
+            <mat-form-field>
+              <input matInput placeholder="Hora" formControlName="time">
+              <!-- error -->
+              <mat-error *ngIf="form.get('time')!.hasError('required')">
+                Hora es <strong>requerida</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Submit form -->
+            <div style="margin-top: 20px;">
+              <button mat-flat-button type="submit" color="primary" [disabled]="form.invalid">Resultado</button>
+            </div>
+          </div>
+        </div>
+
+      </form>
     </div>
   </div>
 </div>
 
-
-
-  <section>
-    <div class="example-label">Raised</div>
-    <div class="example-button-row">
-      <button mat-raised-button>Basic</button>
-      <button mat-raised-button color="primary">Primary</button>
-      <button mat-raised-button color="accent">Accent</button>
-      <button mat-raised-button color="warn">Warn</button>
-      <button mat-raised-button disabled>Disabled</button>
-      <a mat-raised-button href="https://www.google.com/" target="_blank">Link</a>
-    </div>
-  </section>
-  
 <router-outlet></router-outlet>
