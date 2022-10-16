@@ -18,8 +18,6 @@ export class AppComponent implements OnInit {
 
   resultMessage = "";
 
-  title = 'pico-placa';
-
   constructor(public fb: FormBuilder, private picoPlacaService: PicoPlacaService) { }
 
   ngOnInit(): void {
@@ -43,32 +41,39 @@ export class AppComponent implements OnInit {
     let dateString = date.format('dddd D [de] MMMM [del] YYYY');
     let plate: string = this.form.value.plate;
     let digitNumber = plate.slice(-1);
+    // se consulta si el ultimo digiot de placa tiene restriccion en el dia seleccionado
     const resultDay = this.picoPlacaService.isForbiddenDay(date.isoWeekday(), Number(digitNumber));
-    let h = moment(this.form.value.time, "HH:mm");
+    let hour = moment(this.form.value.time, "HH:mm");
+
     if (resultDay) {
-      const resultTime = this.picoPlacaService.isForbiddenHour(h);
+      // si tiene se verifica hora
+      const resultTime = this.picoPlacaService.isForbiddenHour(hour);
       if (resultTime) {
-        this.permit = false;
-        this.resultMessage = this.picoPlacaService.buildMessage(plate, dateString , this.form.value.time, false);
+        this.setResult(plate, dateString, this.form.value.time, false);
       } else {
-        this.permit = true;
-        this.resultMessage = this.picoPlacaService.buildMessage(plate, dateString, this.form.value.time, true);
+        this.setResult(plate, dateString, this.form.value.time, true);
       }
     } else {
-      this.permit = true;
-      this.resultMessage = this.picoPlacaService.buildMessage(plate, dateString, this.form.value.time, true);
+      // si no tiene restriccion el ultimo digito de la placa ya no se verifica hora
+      this.setResult(plate, dateString, this.form.value.time, true);
     }
   }
 
-  resetForm():void{
+  setResult(plate: string, date: string, time: string, permit: boolean): void {
+    this.permit = permit;
+    this.resultMessage = this.picoPlacaService.buildMessage(plate, date, time, permit);
+  }
+
+  resetForm(): void {
     this.showResult = false;
     this.permit = false;
     this.resultMessage = "";
     this.form.reset();
+    // se resetea validaciones
     Object.keys(this.form.controls).forEach(key => {
       this.form.controls[key].setErrors(null)
     });
-    
+
   }
 
 }

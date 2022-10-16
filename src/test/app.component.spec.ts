@@ -25,23 +25,28 @@ describe('AppComponent', () => {
   it('should create the app', () => {
     expect(comp).toBeTruthy();
   });
-
-  it(`should have as title 'pico-placa'`, () => {
-    expect(comp.title).toEqual('pico-placa');
-  });
-
-  /*it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('pico-placa app is running!');
-  });*/
-
+  
   it('form invalido cuando esta vacio', () => {
     expect(comp.form?.valid).toBeFalsy();
   });
 
   it('placa input validar vacio', () => {
+    let plate = comp.form?.controls['plate'];
+    expect(plate?.valid).toBeFalsy();
+  });
+
+  it('placa input validar placa valida de acuerdo a patron LCH-0245', () => {
+    fixture.detectChanges();
+    comp.form?.controls['plate'].setValue('LCH-0245');
+    fixture.detectChanges();
+    let plate = comp.form?.controls['plate'];
+    expect(plate?.valid).toBeTruthy();
+  });
+
+  it('placa input validar placa invalida de acuerdo a patron LCH-0245', () => {
+    fixture.detectChanges();
+    comp.form?.controls['plate'].setValue('LCH-02LK');
+    fixture.detectChanges();
     let plate = comp.form?.controls['plate'];
     expect(plate?.valid).toBeFalsy();
   });

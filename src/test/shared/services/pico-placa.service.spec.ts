@@ -29,28 +29,24 @@ describe('PicoPlacaService', () => {
     it('debe verificar si la hora esta prohibida, caso mañana', ()=> {
       // 06:00 no esta permitido
       var result = service.isForbiddenHour(moment('06:00', "HH:mm"));
-      console.log(result);
       expect(result).toBeTrue();
     });
 
     it('debe verificar si la hora no esta prohibida, caso mañana', ()=> {
       // 05:00 no esta permitido
       var result = service.isForbiddenHour(moment('05:00', "HH:mm"));
-      console.log(result);
       expect(result).toBeFalse();
     });
 
     it('debe verificar si la hora esta prohibida, caso tarde', ()=> {
       // 16:00 no esta permitido
       var result = service.isForbiddenHour(moment('16:00', "HH:mm"));
-      console.log(result);
       expect(result).toBeTrue();
     });
 
     it('debe verificar si la hora no esta prohibida, caso tarde', ()=> {
       // 22:00 no esta permitido
       var result = service.isForbiddenHour(moment('22:00', "HH:mm"));
-      console.log(result);
       expect(result).toBeFalse();
     });
   });
