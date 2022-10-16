@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { AmazingTimePickerModule } from '@jonijnm/amazing-time-picker';
+
 
 // Angular Material
 import { AngularMaterialModule } from './material.module';
@@ -19,7 +21,7 @@ import { AngularMaterialModule } from './material.module';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

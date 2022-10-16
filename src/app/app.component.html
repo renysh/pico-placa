@@ -13,18 +13,24 @@
 
             <mat-form-field>
               <input matInput placeholder="Placa" formControlName="plate">
-              <!-- error -->
+              <mat-hint>Formato LCH-0245</mat-hint>
+              <!-- error requerido-->
               <mat-error *ngIf="form.get('plate')!.hasError('required')">
                 Placa es <strong>requerida</strong>
+              </mat-error>
+              <!-- error pattern-->
+              <mat-error *ngIf="form.get('plate')!.hasError('pattern')">
+                Placa es <strong>debe tener el siguiente formato LCH-0245</strong>
               </mat-error>
             </mat-form-field>
 
 
             <!-- fecha -->
-            <mat-form-field>
+            <mat-form-field style="margin-top: 15px;">
               <input matInput placeholder="Fecha" [matDatepicker]="picker" formControlName="date">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
+              <mat-hint>YYYY-MM-DD</mat-hint>
               <!-- error -->
               <mat-error *ngIf="form.get('date')!.hasError('required')">
                 Fecha es <strong>requerida</strong>
@@ -32,23 +38,30 @@
             </mat-form-field>
 
             <!-- hora -->
-            <mat-form-field>
-              <input matInput placeholder="Hora" formControlName="time">
+            <mat-form-field style="margin-top: 15px;">
+              <input matInput type="time" placeholder="Hora" formControlName="time">
+              <mat-hint>HH24:mm</mat-hint>
               <!-- error -->
               <mat-error *ngIf="form.get('time')!.hasError('required')">
                 Hora es <strong>requerida</strong>
               </mat-error>
             </mat-form-field>
 
-            <!-- Submit form -->
+            
             <div style="margin-top: 20px;">
-              <button mat-flat-button type="submit" color="primary" [disabled]="form.invalid">Resultado</button>
+              <!-- Submit form, se habilita cuando el formulario es valido-->
+              <button id="buttonResult" mat-raised-button type="submit" style="margin-right: 10px;" color="primary" [disabled]="form.invalid">Resultado</button>
+              <!-- Reset form -->
+              <button mat-raised-button type="button" (click)="resetForm()">Resetear</button>
             </div>
           </div>
         </div>
 
       </form>
     </div>
+  </div>
+  <div *ngIf="showResult" id="messageResult" [className]="permit ? 'alert alert-success' : 'alert alert-danger'" role="alert" style="margin-top: 10px">
+    {{resultMessage}}
   </div>
 </div>
 
